@@ -1,0 +1,62 @@
+C00C	000				jmp		start	skip variables
+0000	001		i		dw		0		int i
+0000	002		s		dw		0		int sum
+003E	003		&a 		dw		0		int a[]
+0000	004		n		dw		0		size of array
+0000	005		zero	dw		0		zero
+0001	006		one		dw		1		one
+3000	007		ldit	dw		3000	load
+4000	008		store	dw		4000	store
+0000	009
+0000	00A								So spacious
+0000	00B
+1000	00C		start	readH	
+4004	00D				store	n
+3005	00E				load	zero	
+4001	00F				store 	i 		i = 0
+3004	010		loop	load 	n 		if(i >= n) xit  ****************
+6001	011		sub 	i 				n - i
+E01E	012 	jmpl 	xit
+D01E	013 	jmpe 	xit
+3008 	014		load 	store
+5003	015		add		a
+5001	016		add 	i
+4019	017		store	doit
+1000	018		readH
+0000	019		doit	dw
+3001	01A		load	i 				i += 1
+5006	01B		add		one 
+4001 	01C 	store 	i 				after i += 1
+C010 	01D 	jmp 	loop 			go back to loop 1
+3005	01E 	load 	i 				reset i
+4001 	01F		store 	i 				i = 0
+3004	020		loop 	load 	n 		if(i >= n) xit  ****************
+6001 	021 	sub 	i 				n - i
+E02E 	022 	jmpl 	xit
+D02E	023 	jmpe 	xit
+3007 	024		load 	store
+5003 	025 	add 	a
+5001 	026 	add 	i
+4028 	027 	store 	doit
+0000 	028 	doit 
+1800 	029 	printH
+3001 	02A 	load 	i 				i += 1
+5006 	02B 	add 	one 
+4001 	02C 	store 	i 				after i += 1
+C020 	02D 	jmp 	loop 			go back to loop 2
+3001 	02E 	load 	i 
+6006 	02F 	sub 	1 				i -= 1
+4001 	030		store 	i 
+3001 	031 	loop	load i 			******************
+E03D 	032 	xit 					when i < 0 
+3007 	033 	load 	store
+5003 	034 	add 	a
+5001 	035 	add 	i
+4037 	036 	store 	doit
+0000 	037 	doit
+1800 	038 	printH
+3001 	039 	load 	i 				i -= 1
+6006 	03A 	sub 	1 				i - 1
+4001 	03B 	store 	i   			after i -= 1
+C030	03C 	jmp 	loop 			jump back to loop 3 
+0000 	03D 	halt 

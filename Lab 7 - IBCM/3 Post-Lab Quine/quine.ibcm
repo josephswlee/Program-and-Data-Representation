@@ -1,0 +1,18 @@
+C005	000 			jmp		start
+0011 	001 	n 		dw 		size n = 16
+0001	002 	one		dw 		const 1
+3000 	003 	ldit	dw 		ldit instruction
+0000 	004 	i 		dw 		0
+3001 	005 	start 	load 	load size 
+6012 	006 			sub 	size - 0
+E011 	007 			jmpl 	jump to xit if (i > size)
+3003 	008 			load 	ldit instruction
+5012 	009 			add 	add zero
+400B	00A 			store 	doit
+0000	00B 	doit 	dw 		
+1800 	00C 			printH 
+3012 	00D 			load 	i
+5002 	00E 			add 	i++
+4012 	00F 			store 	save i++
+C005 	010  			jmp 	start
+0000 	011 	xit

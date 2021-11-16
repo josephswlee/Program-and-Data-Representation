@@ -1,0 +1,97 @@
+C00E 	000				jmp 	start	skip variables
+000A	001		n		dw		10		max n = 10
+0000	002		i 		dw		0 		itr i = 0
+0009	003		j 		dw		9		max - 1 = 9
+0000	004		zero	dw		0		const 0
+0001	005		one		dw 		1 		const 1
+0000	006		temp 	dw 		0		temp for swap
+5000	007 	adit	dw 		5000	adit instruction
+3000	008 	ldit 	dw 		3000 	ldit instruction
+4000 	009 	stit	dw 		4000 	stit instruction
+0070	00A 	&a 		dw 				&a[] ** Hardcode the address **
+0000 	00B 	temp2 	dw 		0		temp2 for swap					
+0000 	00C								spacious rooms 
+0000 	00D 							
+3004	00E 	start 	load 	0 		load zero
+4002 	00F 			store 	i 		i = 0
+3001	010 	iloop 	load 	n 		if (i >= n) xit (input loop) ---------------
+6002 	011 			sub 	i 		n - i
+E01E 	012 			jmpl 	xit 	jump to xit if (n - i < 0)
+D01E 	013 			jmpe 	xit 	jump to xit if (n - i = 0)
+3009 	014 			store 			load stit instruction 
+500A 	015 			add 	a 		a[]
+5002 	016 			add 	i 		a[i]
+4019	017 			store 	doiti 
+1000 	018 			readH 			read input
+0000 	019 	doiti 	dw 	 			doit input
+3002 	01A 			load 	i 		i += 1
+5005 	01B 			add 	one
+4002 	01C 			store 	i 		after i += 1
+C010 	01D 			jmp 	iloop 	go back to loop 1 ----------------
+3004 	01E 	xit		load 	zero 	reset i to zero
+4002 	01F 			store 	i 		i = 0
+3001 	020 	loop 	load 	n 		load max if (max - i < 0) xit2 *********
+6002 	021 			sub 	i 		max - i 
+E050 	022 			jmpl 	xit2 	goto xit2 if (max - i < 0) 
+D050 	023 			jmpe 	xit2 	goto xit2 if (max - i = 0)
+3003  	024 	loop2	load 	j 		load j #####################
+6002 	025 			sub 	i 		j - i 
+E049 	026 			jmpl 	endl 	jump to endl if (j - i < 0)
+D049	027 			jmpe 	endl 	jump to endl if (j - i = 0)
+3008 	028 			load 	ldit 	load ldit instruction
+500A 	029 			add 	&a 		a[]
+5003 	02A 			add 	j 		a[j]
+402C 	02B 			store 	doit 	
+0000 	02C 	doit	dw 				doit = a[j] (sorting)
+4006	02D 			store 	temp 	temp = a[j]
+3008 	02E 			load 	ldit 	load ldit instruction
+500A 	02F 			add 	&a 		a[]
+5003 	030 			add 	j 		a[j]
+6005 	031 			sub 	one 	a[j - 1]
+4033 	032 			store 	doit2 	
+0000 	033 	doit2 	dw 				doit2 
+400B 	034 			store 	temp2 	temp2 = a[j - 1]  ** maybe i have to load it (temp2 before sub) **
+6006  	035 			sub 	temp 	a[j - 1] - a[j]
+E045 	036 			jmpl 	endl2 	jump to endl 2 if (a[j - 1] - a[j] < 0)
+D045 	037 			jmpe 	endl2 	jump to endl 2 if (a[j - 1] - a[j] = 0)
+3009 	038 			load 	stit 	load stit instruction
+500A 	039 			add 	&a 		a[]
+5003 	03A 			add 	j 		a[j]
+6005 	03B 			sub 	one 	a[j - 1]
+403E 	03C 			store 	doit3
+3006 	03D 			load 	temp 
+0000	03E 	doit3 	dw 				store a[j] in a[j - 1]
+3009 	03F 			load 	stit 	load a[j - 1]
+500A 	040 			add 	&a 		a[]
+5003 	041 			add 	j 		a[j]
+4044 	042 			store 	doit4 
+300B 	043 			load 	temp2
+0000 	044 	doit4 	dw 				store a[j - 1] into a[j]
+3003 	045 	endl2 	load 	j 		load j
+6005 	046 			sub 	one 	j--
+4003 	047 			store  	j 		store j after decrementing
+C024 	048 			jmp 	loop2 	jump back to loop2 ##############
+3001 	049 	endl	load 	n 		to reset j
+6005 	04A 			sub 	one 	
+4003 	04B				store 	j 		max - 1
+3002 	04C 			load 	i 		load i
+5005	04D 			add 	one 	i++
+4002 	04E 			store 	i 		store i
+C020 	04F 			jmp  	loop 	jump back to loop ************
+3004 	050 	xit2	load 	zero 	reset i
+4002 	051 			store 	if 		i = 0
+3001 	052 	ploop	load 	n 		if (i >= n) xit3 ^^^^^^^^^^^^^^^
+6002 	053 			sub 	i 		n - i
+E060 	054 			jmpl 	xit3
+D060 	055 			jmpe 	xit3
+3008 	056 			load 	stit 	stit instruction
+500A	057 			add 	&a 		a[]
+5002 	058 			add 	i 		a[i]
+405A 	059 			store 	doitp
+0000 	05A 	doitp 	
+1800 	05B 			ptintH
+3002 	05C 			load 	i 		
+5005 	05D 			add 	one 	i++
+4002 	05E 			store 	i 		after i++
+C052 	05F 			jmp 	ploop  	jump back to print loop ^^^^^^^^^^^
+0000 	060 	xit3 	halt
