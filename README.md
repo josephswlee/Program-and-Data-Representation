@@ -5,4 +5,4 @@
 ### Description
 Code submitted for weekly labs (Pre-Lab, In-Lab, Post-Lab) for CS 2150, Program and Data Representation
 
-This repo is opened temporarily for graduate school application
+#### This repo is opened temporarily for graduate school application
